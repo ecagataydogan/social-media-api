@@ -20,3 +20,13 @@ app:
   jwtSecret: someSecretKey
   jwtExpirationMs: 3600000
   jwtRefreshExpirationMs: 86400000
+
+cdn:
+  upload-path: /Users/ecagataydogan/Desktop/cdn
+  host: http://localhost:8080/cdn/
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    groups:
+      enabled: true
