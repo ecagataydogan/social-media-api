@@ -1,7 +1,7 @@
 package com.eso.socialmediaserver.client.controller;
 
-import com.eso.socialmediaserver.security.service.AuthenticationFacade;
-import com.eso.socialmediaserver.user.entity.User;
+import com.eso.socialmediaserver.client.dto.response.ClientResponse;
+import com.eso.socialmediaserver.client.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class ClientController {
 
-    private final AuthenticationFacade authenticationFacade;
+    private final ClientService clientService;
 
     @GetMapping
-    public void getClient(Authentication authentication) {
-        User user = authenticationFacade.getUserThroughAuthentication(authentication);
-        System.out.println(user);
+    public ClientResponse getClient(Authentication authentication) {
+        return clientService.toClientResponse(authentication);
     }
 }
