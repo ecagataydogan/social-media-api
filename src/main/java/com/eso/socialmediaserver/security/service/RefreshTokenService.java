@@ -1,5 +1,7 @@
 package com.eso.socialmediaserver.security.service;
 
+import com.eso.socialmediaserver.exception.dto.BusinessException;
+import com.eso.socialmediaserver.exception.dto.ErrorCode;
 import com.eso.socialmediaserver.security.config.JwtConfig;
 import com.eso.socialmediaserver.security.entity.RefreshToken;
 import com.eso.socialmediaserver.security.repository.RefreshTokenRepository;
@@ -26,7 +28,7 @@ public class RefreshTokenService {
                 .map(this::verifyExpiration)
                 .map(RefreshToken::getUser)
                 .map(user -> accessTokenService.generateToken(user.getEmail()))
-                .orElseThrow(() -> new RuntimeException("Refresh token does not exist")); // todo custom exception
+                .orElseThrow(() -> new BusinessException(ErrorCode.not_found, "Refresh token does not exist"));
     }
 
     public RefreshToken createRefreshToken(Long userId) {
@@ -44,7 +46,7 @@ public class RefreshTokenService {
     private RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
             refreshTokenRepository.delete(token);
-            throw new RuntimeException("Refresh token expired"); // todo custom exception
+            throw new BusinessException(ErrorCode.code_expired, "Refresh token expired");
         }
         return token;
     }

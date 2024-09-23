@@ -1,5 +1,7 @@
 package com.eso.socialmediaserver.security.service;
 
+import com.eso.socialmediaserver.exception.dto.BusinessException;
+import com.eso.socialmediaserver.exception.dto.ErrorCode;
 import com.eso.socialmediaserver.security.dto.UserDetailsImpl;
 import com.eso.socialmediaserver.security.dto.request.LoginRequest;
 import com.eso.socialmediaserver.security.dto.request.RefreshTokenRequest;
@@ -32,7 +34,7 @@ public class AuthService {
     public void register(RegisterRequest registerRequest) {
         boolean isPasswordMatch = isPasswordMatch(registerRequest.getPassword(), registerRequest.getConfirmPassword());
         if (!isPasswordMatch) {
-            throw new RuntimeException("Passwords do not match"); // todo it will throw business exception
+            throw new BusinessException(ErrorCode.password_mismatch, "Passwords mismatch");
         }
         User user = new User();
         user.setEmail(registerRequest.getEmail());

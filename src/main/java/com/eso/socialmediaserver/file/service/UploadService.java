@@ -1,5 +1,7 @@
 package com.eso.socialmediaserver.file.service;
 
+import com.eso.socialmediaserver.exception.dto.BusinessException;
+import com.eso.socialmediaserver.exception.dto.ErrorCode;
 import com.eso.socialmediaserver.file.config.CdnConfig;
 import com.eso.socialmediaserver.file.dto.response.UploadResponse;
 import jakarta.transaction.Transactional;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class UploadService {
 
     @SneakyThrows
     public UploadResponse upload(MultipartFile multipartFile) {
-        ZonedDateTime now =  ZonedDateTime.now();
+        ZonedDateTime now = ZonedDateTime.now();
 
         String datePath = now.getYear() + "/" + now.getMonthValue() + "/" + now.getDayOfMonth();
         File folder = new File(cdnConfig.getUploadPath() + "/" + datePath);
@@ -36,7 +37,7 @@ public class UploadService {
         try {
             newName = UUID.randomUUID() + oldName.substring(oldName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException exception) {
-            throw new RuntimeException("File extension is missing."); // todo validation exception
+            throw new BusinessException(ErrorCode.validation, "File extension is missing.");
         }
 
         multipartFile.transferTo(new File(folder, newName));
