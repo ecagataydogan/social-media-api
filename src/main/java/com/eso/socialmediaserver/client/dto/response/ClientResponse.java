@@ -1,7 +1,6 @@
 package com.eso.socialmediaserver.client.dto.response;
 
 import com.eso.socialmediaserver.file.dto.response.FileResponse;
-import com.eso.socialmediaserver.file.entity.File;
 import lombok.Builder;
 import lombok.Data;
 
