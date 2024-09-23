@@ -27,5 +27,4 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "modified_date", nullable = false)
     @LastModifiedDate
     private ZonedDateTime modifiedDate;
-
 }

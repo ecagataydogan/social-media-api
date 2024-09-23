@@ -18,7 +18,6 @@ public class AuthController {
 
     private final AuthService authService;
 
-
     @PostMapping("/register")
     public void register(@Valid @RequestBody RegisterRequest registerRequest) {
         authService.register(registerRequest);
@@ -33,5 +32,4 @@ public class AuthController {
     public RefreshTokenResponse refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         return authService.refreshToken(refreshTokenRequest);
     }
-
 }

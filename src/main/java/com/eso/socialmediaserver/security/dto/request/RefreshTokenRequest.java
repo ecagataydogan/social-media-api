@@ -8,5 +8,4 @@ public class RefreshTokenRequest {
 
     @NotEmpty
     private String refreshToken;
-
 }

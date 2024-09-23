@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class ClientController {
 
-
     private final AuthenticationFacade authenticationFacade;
 
     @GetMapping
