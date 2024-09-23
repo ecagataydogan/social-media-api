@@ -1,5 +1,7 @@
 package com.eso.socialmediaserver.user;
 
+import com.eso.socialmediaserver.exception.dto.BusinessException;
+import com.eso.socialmediaserver.exception.dto.ErrorCode;
 import com.eso.socialmediaserver.user.entity.User;
 import com.eso.socialmediaserver.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,6 @@ public class UserService {
 
     public User getUser(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found")); // todo custom exception
+                .orElseThrow(() -> new BusinessException(ErrorCode.not_found, "User not found"));
     }
 }

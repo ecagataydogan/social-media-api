@@ -1,5 +1,7 @@
 package com.eso.socialmediaserver.file.service;
 
+import com.eso.socialmediaserver.exception.dto.BusinessException;
+import com.eso.socialmediaserver.exception.dto.ErrorCode;
 import com.eso.socialmediaserver.file.config.CdnConfig;
 import com.eso.socialmediaserver.file.dto.response.FileResponse;
 import com.eso.socialmediaserver.file.dto.response.UploadResponse;
@@ -29,7 +31,7 @@ public class FileService {
 
     public FileResponse getFile(Long id) {
         File file = fileRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("File not found")); // todo resource missing
+                .orElseThrow(() -> new BusinessException(ErrorCode.resource_missing, "File not found"));
         return FileMapper.toResponse(file, cdnConfig.getUploadPath(), cdnConfig.getHost());
     }
 
@@ -44,7 +46,7 @@ public class FileService {
 
     public ResponseEntity<ByteArrayResource> downloadFile(Long id) throws IOException {
         File fileEntity = fileRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("File not found.")); // todo resource missing
+                .orElseThrow(() -> new BusinessException(ErrorCode.resource_missing, "File not found."));
 
         java.io.File file = new java.io.File(fileEntity.getPath());
         FileInputStream fileInputStream = new FileInputStream(file);
