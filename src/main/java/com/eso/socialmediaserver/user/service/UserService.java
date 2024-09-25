@@ -1,4 +1,4 @@
-package com.eso.socialmediaserver.user;
+package com.eso.socialmediaserver.user.service;
 
 import com.eso.socialmediaserver.exception.dto.BusinessException;
 import com.eso.socialmediaserver.exception.dto.ErrorCode;
