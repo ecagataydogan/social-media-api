@@ -6,7 +6,6 @@ import com.eso.socialmediaserver.client.entity.Client;
 import com.eso.socialmediaserver.file.entity.File;
 import com.eso.socialmediaserver.file.mapper.FileMapper;
 import com.eso.socialmediaserver.user.entity.User;
-import jakarta.validation.constraints.NotNull;
 
 public class ClientMapper {
 
