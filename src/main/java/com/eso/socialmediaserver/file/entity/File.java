@@ -1,5 +1,6 @@
 package com.eso.socialmediaserver.file.entity;
 
+import com.eso.socialmediaserver.client.entity.Client;
 import com.eso.socialmediaserver.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,4 +28,7 @@ public class File extends BaseEntity {
 
     @Column(name = "url")
     private String url;
+
+    @ManyToOne
+    private Client client;
 }
