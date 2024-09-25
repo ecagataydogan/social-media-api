@@ -32,6 +32,11 @@ public class AuthService {
     private final UserRepository userRepository;
 
     public void register(RegisterRequest registerRequest) {
+        userRepository.findByEmail(registerRequest.getEmail())
+                .ifPresent(existingUser -> {
+                    throw new BusinessException(ErrorCode.conflict, "User with email " + registerRequest.getEmail() + " already exists");
+                });
+
         boolean isPasswordMatch = isPasswordMatch(registerRequest.getPassword(), registerRequest.getConfirmPassword());
         if (!isPasswordMatch) {
             throw new BusinessException(ErrorCode.password_mismatch, "Passwords mismatch");

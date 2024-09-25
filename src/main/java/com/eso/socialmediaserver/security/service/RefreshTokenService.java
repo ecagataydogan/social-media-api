@@ -5,7 +5,7 @@ import com.eso.socialmediaserver.exception.dto.ErrorCode;
 import com.eso.socialmediaserver.security.config.JwtConfig;
 import com.eso.socialmediaserver.security.entity.RefreshToken;
 import com.eso.socialmediaserver.security.repository.RefreshTokenRepository;
-import com.eso.socialmediaserver.user.UserService;
+import com.eso.socialmediaserver.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
