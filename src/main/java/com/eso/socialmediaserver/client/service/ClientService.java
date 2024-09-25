@@ -45,6 +45,11 @@ public class ClientService {
         if (user.getClient() != null) {
             throw new BusinessException(ErrorCode.already_onboarded, "User already onboarded");
         }
+        clientRepository.findByUsername(onboardRequest.getUsername()).
+                ifPresent(existingClient -> {
+                    throw new BusinessException(ErrorCode.conflict, "Client with username " + onboardRequest.getUsername() + " already exist");
+                });
+
         File avatar = null;
         if (onboardRequest.getAvatarId() != null) {
             avatar = fileRepository.findById(onboardRequest.getAvatarId())
