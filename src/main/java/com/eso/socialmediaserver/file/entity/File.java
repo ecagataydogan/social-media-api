@@ -30,5 +30,6 @@ public class File extends BaseEntity {
     private String url;
 
     @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 }
