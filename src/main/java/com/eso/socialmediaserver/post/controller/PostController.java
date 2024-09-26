@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/post")
 @AllArgsConstructor
@@ -27,5 +29,17 @@ public class PostController {
     public void handlePostLike(@PathVariable Long postId, Authentication authentication) {
         Client client = clientService.getClient(authentication);
         postService.handlePostLike(postId, client);
+    }
+
+    @GetMapping()
+    public List<PostResponse> getPosts(Authentication authentication) {
+        Client client = clientService.getClient(authentication);
+        return postService.getPosts(client);
+    }
+
+    @GetMapping("/{postId}")
+    public PostResponse getPostById(@PathVariable Long postId, Authentication authentication) {
+        Client client = clientService.getClient(authentication);
+        return postService.getPostById(postId, client);
     }
 }

@@ -16,6 +16,7 @@ import com.eso.socialmediaserver.post.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -32,7 +33,7 @@ public class PostService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.not_found, "Image not found with id: " + postRequest.getImageId()));
 
         Post post = PostMapper.toEntity(postRequest, image, client);
-        return PostMapper.toResponse(postRepository.save(post), image, cdnConfig.getUploadPath(), cdnConfig.getHost());
+        return PostMapper.toResponse(postRepository.save(post), cdnConfig.getUploadPath(), cdnConfig.getHost());
     }
 
     public void handlePostLike(Long postId, Client client) {
@@ -48,5 +49,17 @@ public class PostService {
                             likeRepository.save(like);
                         }
                 );
+    }
+
+    public List<PostResponse> getPosts(Client client) {
+        return postRepository.findByClient(client).stream()
+                .map(post -> PostMapper.toResponse(post, cdnConfig.getUploadPath(), cdnConfig.getHost()))
+                .toList();
+    }
+
+    public PostResponse getPostById(Long postId, Client client) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.not_found, "Post not found with id: " + postId));
+        return PostMapper.toResponse(post, cdnConfig.getUploadPath(), cdnConfig.getHost());
     }
 }
