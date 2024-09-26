@@ -25,4 +25,10 @@ public class CommentController {
         Client client = clientService.getClient(authentication);
         return commentService.createComment(postId, commentRequest, client);
     }
+
+    @PostMapping("/{commentId}/like")
+    public void handleCommentLike(@PathVariable Long commentId, Authentication authentication) {
+        Client client = clientService.getClient(authentication);
+        commentService.handleCommentLike(commentId, client);
+    }
 }
