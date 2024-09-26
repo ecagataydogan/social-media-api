@@ -1,5 +1,6 @@
 package com.eso.socialmediaserver.file.service;
 
+import com.eso.socialmediaserver.client.entity.Client;
 import com.eso.socialmediaserver.exception.dto.BusinessException;
 import com.eso.socialmediaserver.exception.dto.ErrorCode;
 import com.eso.socialmediaserver.file.config.CdnConfig;
@@ -29,19 +30,20 @@ public class FileService {
     private final UploadService uploadService;
     private final CdnConfig cdnConfig;
 
-    public FileResponse getFile(Long id) {
-        File file = fileRepository.findById(id)
+    public FileResponse getFile(Long id, Client client) {
+        File file = fileRepository.findByIdAndClient(id, client)
                 .orElseThrow(() -> new BusinessException(ErrorCode.resource_missing, "File not found"));
         return FileMapper.toResponse(file, cdnConfig.getUploadPath(), cdnConfig.getHost());
     }
 
-    public File uploadFile(MultipartFile multipartFile) {
+    public FileResponse uploadFile(MultipartFile multipartFile, Client client) {
         UploadResponse uploadResponse = uploadService.upload(multipartFile);
         File file = new File();
         file.setName(multipartFile.getOriginalFilename());
         file.setPath(uploadResponse.getPath());
         file.setContentType(multipartFile.getContentType());
-        return fileRepository.save(file);
+        file.setClient(client);
+        return FileMapper.toResponse(fileRepository.save(file), cdnConfig.getUploadPath(), cdnConfig.getHost());
     }
 
     public ResponseEntity<ByteArrayResource> downloadFile(Long id) throws IOException {
