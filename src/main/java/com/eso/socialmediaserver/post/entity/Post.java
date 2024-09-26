@@ -24,7 +24,7 @@ public class Post extends BaseEntity {
     @Column(name = "content")
     private String content;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "image_id")
     private File image;
 
