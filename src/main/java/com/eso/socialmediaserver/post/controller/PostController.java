@@ -7,10 +7,7 @@ import com.eso.socialmediaserver.post.dto.response.PostResponse;
 import com.eso.socialmediaserver.post.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/post")
@@ -24,5 +21,11 @@ public class PostController {
     public PostResponse createPost(@RequestBody PostRequest postRequest, Authentication authentication) {
         Client client = clientService.getClient(authentication);
         return postService.createPost(postRequest, client);
+    }
+
+    @PostMapping("/{postId}/like")
+    public void handlePostLike(@PathVariable Long postId, Authentication authentication) {
+        Client client = clientService.getClient(authentication);
+        postService.handlePostLike(postId, client);
     }
 }
