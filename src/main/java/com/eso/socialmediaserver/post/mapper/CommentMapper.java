@@ -7,7 +7,6 @@ import com.eso.socialmediaserver.post.dto.response.CommentResponse;
 import com.eso.socialmediaserver.post.entity.Comment;
 import com.eso.socialmediaserver.post.entity.Post;
 
-import java.util.ArrayList;
 
 public class CommentMapper {
 
@@ -29,7 +28,8 @@ public class CommentMapper {
                 .content(comment.getContent())
                 .postId(comment.getPost().getId())
                 .clientResponse(ClientMapper.toResponse(comment.getClient(), filePath, fileUrl))
-                .likes(new ArrayList<>()) // todo
+                .likes(comment.getLikes() != null ? comment.getLikes().stream()
+                        .map(like -> LikeMapper.toResponse(like, filePath, fileUrl)).toList() : null)
                 .build();
     }
 }

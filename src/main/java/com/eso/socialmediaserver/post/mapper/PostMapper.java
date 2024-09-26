@@ -24,14 +24,18 @@ public class PostMapper {
         return post;
     }
 
-    public static PostResponse toResponse(Post post, File image, String filePath, String fileUrl) {
+    public static PostResponse toResponse(Post post, String filePath, String fileUrl) {
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())
-                .image(FileMapper.toResponse(image, filePath, fileUrl))
+                .image(FileMapper.toResponse(post.getImage(), filePath, fileUrl))
                 .location(post.getLocation())
-                .comments(new ArrayList<>()) // todo
-                .likes(new ArrayList<>()) // todo
+                .comments(post.getComments() != null ? post.getComments().stream()
+                        .map(comment -> CommentMapper.toResponse(comment, filePath, fileUrl))
+                        .toList() : new ArrayList<>())
+                .likes(post.getLikes() != null ? post.getLikes().stream()
+                        .map(like -> LikeMapper.toResponse(like, filePath, fileUrl))
+                        .toList() : null)
                 .build();
     }
 }
