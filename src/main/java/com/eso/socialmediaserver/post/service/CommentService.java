@@ -17,8 +17,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional
 @AllArgsConstructor
@@ -34,7 +32,7 @@ public class CommentService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.not_found, "Post not found with id: " + postId));
 
         Comment comment = CommentMapper.toEntity(commentRequest, post, client);
-        return CommentMapper.toResponse(comment, cdnConfig.getUploadPath(), cdnConfig.getHost());
+        return CommentMapper.toResponse(commentRepository.save(comment), cdnConfig.getUploadPath(), cdnConfig.getHost());
     }
 
     public void handleCommentLike(Long commentId, Client client) {
