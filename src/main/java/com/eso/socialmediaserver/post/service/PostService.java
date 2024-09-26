@@ -8,7 +8,6 @@ import com.eso.socialmediaserver.file.entity.File;
 import com.eso.socialmediaserver.file.repository.FileRepository;
 import com.eso.socialmediaserver.post.dto.request.PostRequest;
 import com.eso.socialmediaserver.post.dto.response.PostResponse;
-import com.eso.socialmediaserver.post.entity.Comment;
 import com.eso.socialmediaserver.post.entity.Like;
 import com.eso.socialmediaserver.post.entity.Post;
 import com.eso.socialmediaserver.post.mapper.PostMapper;
@@ -33,7 +32,7 @@ public class PostService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.not_found, "Image not found with id: " + postRequest.getImageId()));
 
         Post post = PostMapper.toEntity(postRequest, image, client);
-        return PostMapper.toResponse(post, image, cdnConfig.getUploadPath(), cdnConfig.getHost());
+        return PostMapper.toResponse(postRepository.save(post), image, cdnConfig.getUploadPath(), cdnConfig.getHost());
     }
 
     public void handlePostLike(Long postId, Client client) {
