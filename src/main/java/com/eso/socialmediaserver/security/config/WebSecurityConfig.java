@@ -64,6 +64,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/post/**").authenticated()
                         .requestMatchers("/comment/**").authenticated()
+                        .requestMatchers("/followers/**").authenticated()
                         .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
