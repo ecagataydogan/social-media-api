@@ -2,7 +2,6 @@ package com.eso.socialmediaserver.follower.mapper;
 
 import com.eso.socialmediaserver.client.entity.Client;
 import com.eso.socialmediaserver.client.mapper.ClientMapper;
-import com.eso.socialmediaserver.follower.dto.request.FollowRequest;
 import com.eso.socialmediaserver.follower.dto.response.FollowRequestEntityResponse;
 import com.eso.socialmediaserver.follower.entity.FollowRequestEntity;
 

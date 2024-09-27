@@ -34,7 +34,6 @@ public class FollowersService {
     private final ClientRepository clientRepository;
     private final FollowerRepository followerRepository;
     private final CdnConfig cdnConfig;
-    private final ClientService clientService;
 
     public void createFollowRequest(FollowRequest followRequest, Client client) {
         Client leader = clientRepository.findByUsername(followRequest.getUsername())
